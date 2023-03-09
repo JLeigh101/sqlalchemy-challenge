@@ -95,7 +95,7 @@ def tobs():
     return jsonify(tobs_data)
 
 #app routing for min, max, avg temp for a given start date
-@app.route("/api/v1.0/<start>")
+@app.route("/api/v1.0/<start_date>")
 def temps_start(start_date):
     session = Session(engine)
 
@@ -105,16 +105,16 @@ def temps_start(start_date):
     temp_data = []
     for tobs in results:
         temp_dict = {}
-        temp_dict["Average"] = func.avg(Measurement.tobs)
-        temp_dict["Minimum"] = func.min(Measurement.tobs)
-        temp_dict["Maximum"] = func.max(Measurement.tobs)
+        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results[0]))
+        #temp_dict["Minimum"] = func.min(Measurement.tobs)
+        #temp_dict["Maximum"] = func.max(Measurement.tobs)
         temp_data.append(temp_dict)
 
     return jsonify(temp_data)
 
 #app routing for min, max, avg temp for a given start date
-@app.route("/api/v1.0/<start>/<end>")
-def temps_start_end(start_date, end_date):
+@app.route("/api/v1.0/<start_date>/<end_date>")
+def temps_start_end(start_date=None, end_date=None):
     session = Session(engine)
 
     results = session.query(func.avg(Measurement.tobs), func.min(Measurement.tobs), func.max(Measurement.tobs)).\
@@ -124,9 +124,9 @@ def temps_start_end(start_date, end_date):
     temp_data = []
     for tobs in results:
         temp_dict = {}
-        temp_dict["Average"] = func.avg(Measurement.tobs)
-        temp_dict["Minimum"] = func.min(Measurement.tobs)
-        temp_dict["Maximum"] = func.max(Measurement.tobs)
+        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results[0]))
+        #temp_dict["Minimum"] = func.min(Measurement.tobs)
+        #temp_dict["Maximum"] = func.max(Measurement.tobs)
         temp_data.append(temp_dict)
 
     return jsonify(temp_data)
