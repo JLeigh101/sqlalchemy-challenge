@@ -69,7 +69,7 @@ def stations():
     station_data = []
     for station in results:
         station_dict = {}
-        station_dict["station name"] = station
+        station_dict["station name"] = station[0]
         station_data.append(station_dict)
 
     return jsonify(station_data)
@@ -81,13 +81,14 @@ def tobs():
     session = Session(engine)
     #query the last 12 months of temperature data from the most active observation station 
     cutoff_date_12month = '2016-08-23'
-    results = session.query(Measurement.tobs).filter((Measurement.station == 'USC00519281') & (Measurement.date > cutoff_date_12month)).all()
+    results = session.query(Measurement.date, Measurement.tobs).filter((Measurement.station == 'USC00519281') & (Measurement.date > cutoff_date_12month)).all()
     session.close()
 
     #create a dictionary of t_obs data for the most active station
     tobs_data = []
-    for tobs in results:
+    for date, tobs in results:
         tobs_dict = {}
+        tobs_dict["Date"] = date
         tobs_dict["Oberved Temperature"] = tobs
         tobs_data.append(tobs_dict)
 
@@ -98,7 +99,8 @@ def tobs():
 def temps_start(start_date):
     session = Session(engine)
 
-    results = session.query(func.avg(Measurement.tobs), func.min(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start_date).all()
+    results = session.query(func.avg(Measurement.tobs), func.min(Measurement.tobs), func.max(Measurement.tobs)).\
+        filter(Measurement.date >= start_date).all()
 
     temp_data = []
     for tobs in results:
@@ -116,8 +118,8 @@ def temps_start_end(start_date, end_date):
     session = Session(engine)
 
     results = session.query(func.avg(Measurement.tobs), func.min(Measurement.tobs), func.max(Measurement.tobs)).\
-    filter((Measurement.date >= start_date)&(Measurement.date <= end_date)).\
-    all()
+        filter((Measurement.date >= start_date)&(Measurement.date <= end_date)).\
+        all()
 
     temp_data = []
     for tobs in results:
