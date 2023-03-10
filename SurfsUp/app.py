@@ -105,9 +105,9 @@ def temps_start(start_date):
     temp_data = []
     for tobs in results:
         temp_dict = {}
-        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results))
-        #temp_dict["Minimum"] = func.min(Measurement.tobs)
-        #temp_dict["Maximum"] = func.max(Measurement.tobs)
+        temp_dict["Average"] = results[0][0]
+        temp_dict["Minimum"] = results[0][1]
+        temp_dict["Maximum"] = results[0][2]
         temp_data.append(temp_dict)
 
     return jsonify(temp_data)
@@ -124,9 +124,9 @@ def temps_start_end(start_date=None, end_date=None):
     temp_data = []
     for tobs in results:
         temp_dict = {}
-        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results))
-        #temp_dict["Minimum"] = func.min(Measurement.tobs)
-        #temp_dict["Maximum"] = func.max(Measurement.tobs)
+        temp_dict["Average"] = results[0][0]
+        temp_dict["Minimum"] = results[0][1]
+        temp_dict["Maximum"] = results[0][2]
         temp_data.append(temp_dict)
 
     return jsonify(temp_data)
