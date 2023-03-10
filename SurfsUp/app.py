@@ -105,7 +105,7 @@ def temps_start(start_date):
     temp_data = []
     for tobs in results:
         temp_dict = {}
-        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results[0]))
+        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results))
         #temp_dict["Minimum"] = func.min(Measurement.tobs)
         #temp_dict["Maximum"] = func.max(Measurement.tobs)
         temp_data.append(temp_dict)
@@ -124,7 +124,7 @@ def temps_start_end(start_date=None, end_date=None):
     temp_data = []
     for tobs in results:
         temp_dict = {}
-        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results[0]))
+        temp_dict["Average, Minimum, Maximum"] = list(np.ravel(results))
         #temp_dict["Minimum"] = func.min(Measurement.tobs)
         #temp_dict["Maximum"] = func.max(Measurement.tobs)
         temp_data.append(temp_dict)
